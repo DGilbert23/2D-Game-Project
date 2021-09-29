@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        MovePlayer();
+        //MovePlayer();
     }
 
     public GameObject GetObjectInFront()

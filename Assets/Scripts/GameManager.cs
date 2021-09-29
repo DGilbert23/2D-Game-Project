@@ -47,15 +47,27 @@ public class GameManager : MonoBehaviour
         //            ContinueDialogue();
         //        }
         //    }
-
         //}
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            foreach (Item i in player.GetComponent<Inventory>().ListItems())
+            Canvas InventoryCanvas = FindObjectOfType<Canvas>();
+
+            if (InventoryCanvas.enabled)
             {
-                Debug.Log("Player Item: " + i.ToString());
+                InventoryCanvas.enabled = false;
+                enablePlayerMovement = true;
             }
+            else
+            {
+                InventoryCanvas.enabled = true;
+                enablePlayerMovement = false;
+            }
+
+            //foreach (Item i in player.GetComponent<Inventory>().ListItems())
+            //{
+            //    Debug.Log("Player Item: " + i.ToString());
+            //}
         }
     }
 
@@ -65,6 +77,11 @@ public class GameManager : MonoBehaviour
         {
             player.MovePlayer();
         }
+    }
+
+    public void SetEnablePlayerMovement(bool inState)
+    {
+        enablePlayerMovement = inState;
     }
 
     private bool CanInteract(GameObject inObject)
