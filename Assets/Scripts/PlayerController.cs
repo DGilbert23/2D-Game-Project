@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private int speed = 12;
+    private int speed = 8;
     private Vector3 targetPosition;
     private ContactFilter2D layerFilter;
     public int lastDirection;
@@ -70,8 +70,8 @@ public class PlayerController : MonoBehaviour
             objectInFront = null;
         }
 
-        if (objectInFront != null)
-            Debug.Log(objectInFront.name);
+        //if (objectInFront != null)
+        //    Debug.Log(objectInFront.name);
 
         return objectInFront;
     }
