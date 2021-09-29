@@ -341,6 +341,9 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
 "Assets/Scripts/GameManager.cs"
+"Assets/Scripts/Interactable.cs"
+"Assets/Scripts/Inventory.cs"
+"Assets/Scripts/Item.cs"
 "Assets/Scripts/PlayerController.cs"
 -langversion:8.0
 

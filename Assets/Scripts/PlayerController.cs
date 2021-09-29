@@ -70,8 +70,8 @@ public class PlayerController : MonoBehaviour
             objectInFront = null;
         }
 
-        //if (objectInFront != null)
-        //    Debug.Log(objectInFront.name);
+        if (objectInFront != null)
+            Debug.Log(objectInFront.name);
 
         return objectInFront;
     }
