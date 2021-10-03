@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -153,9 +154,30 @@ public class GameManager : MonoBehaviour
                 enableInteraction = false;
                 buttonCoolDown = 5;
                 break;
+            case "stair":
+                StartCoroutine(moveToScene(interactObject.sceneToLoad));
+                break;
             default:
                 break;
         }
+    }
+
+    public IEnumerator moveToScene(string sceneName)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(sceneName));
+        SceneManager.MoveGameObjectToScene(GetComponent<Canvas>().gameObject, SceneManager.GetSceneByName(sceneName));
+        SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetSceneByName(sceneName));
+
+        SceneManager.UnloadSceneAsync(currentScene);
     }
 
     //public void ContinueDialogue()

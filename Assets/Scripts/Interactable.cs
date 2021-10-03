@@ -10,6 +10,7 @@ public class Interactable : MonoBehaviour
     public bool locked;
     public string keyName;
     public string type;
+    public string sceneToLoad;
 
     // Start is called before the first frame update
     void Start()
