@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     private ContactFilter2D layerFilter;
     public int lastDirection;
 
-
     void Start()
     {
         targetPosition = transform.position;

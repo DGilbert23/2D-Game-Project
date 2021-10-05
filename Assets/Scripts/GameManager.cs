@@ -155,14 +155,14 @@ public class GameManager : MonoBehaviour
                 buttonCoolDown = 5;
                 break;
             case "stair":
-                StartCoroutine(moveToScene(interactObject.sceneToLoad));
+                StartCoroutine(moveToScene(interactObject.sceneToLoad, interactObject.playerPositionOnLoad));
                 break;
             default:
                 break;
         }
     }
 
-    public IEnumerator moveToScene(string sceneName)
+    public IEnumerator moveToScene(string sceneName, Vector3 newPlayerPosition)
     {
         Scene currentScene = SceneManager.GetActiveScene();
 
@@ -174,8 +174,11 @@ public class GameManager : MonoBehaviour
         }
 
         SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(sceneName));
+        player.transform.position = newPlayerPosition;
         SceneManager.MoveGameObjectToScene(GetComponent<Canvas>().gameObject, SceneManager.GetSceneByName(sceneName));
         SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetSceneByName(sceneName));
+
+        GameStateVariables.LoadSceneVariables(sceneName);
 
         SceneManager.UnloadSceneAsync(currentScene);
     }

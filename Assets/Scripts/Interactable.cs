@@ -11,6 +11,8 @@ public class Interactable : MonoBehaviour
     public string keyName;
     public string type;
     public string sceneToLoad;
+    public Vector3 playerPositionOnLoad;
+    public Sprite openSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +49,9 @@ public class Interactable : MonoBehaviour
                 BoxCollider2D collider = GetComponent<BoxCollider2D>();
                 collider.enabled = true;
             }
+
+            GameStateVariables.UpdateVariableStateInCurrentScene(this.type, new DoorState(this.gameObject.name, this.open, this.locked));
+            this.GetComponent<SpriteRenderer>().sprite = openSprite;
         }
     }
 
@@ -77,5 +82,7 @@ public class Interactable : MonoBehaviour
     public void Unlock()
     {
         locked = false;
+
+        GameStateVariables.UpdateVariableStateInCurrentScene(this.type, new DoorState(this.gameObject.name, this.open, this.locked));
     }
 }

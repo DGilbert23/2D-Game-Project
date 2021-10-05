@@ -341,11 +341,14 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
 "Assets/Scripts/DontDestroy.cs"
+"Assets/Scripts/DoorState.cs"
 "Assets/Scripts/GameManager.cs"
+"Assets/Scripts/GameStateVariables.cs"
 "Assets/Scripts/Interactable.cs"
 "Assets/Scripts/Inventory.cs"
 "Assets/Scripts/Item.cs"
 "Assets/Scripts/PlayerController.cs"
+"Assets/Scripts/SceneVariables.cs"
 -langversion:8.0
 
 /deterministic

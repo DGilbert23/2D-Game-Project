@@ -1292,6 +1292,10 @@ PrefabInstance:
       propertyPath: sceneToLoad
       value: SampleScene
       objectReference: {fileID: 0}
+    - target: {fileID: 6640470086680019756, guid: 074cfc3272a87f142aaaac62432a3b4d, type: 3}
+      propertyPath: playerPositionOnLoad.x
+      value: -10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 074cfc3272a87f142aaaac62432a3b4d, type: 3}
 --- !u!1001 &1509128643
