@@ -9,9 +9,7 @@ public class Interactable : MonoBehaviour
     public bool open;
     public bool locked;
     public string keyName;
-    public string type;
-    public string sceneToLoad;
-    public Vector3 playerPositionOnLoad;
+    public string type;    
     public Sprite openSprite;
     public Sprite closedSprite;
 
@@ -105,6 +103,5 @@ public class Interactable : MonoBehaviour
     private void UpdateStateVariables()
     {
         GameStateVariables.UpdateVariableStateInCurrentScene(this.type, new DoorState(this.gameObject.name, this.open, this.locked));
-        Debug.Log("open?: " + open + " :locked?: " + locked);
     }
 }

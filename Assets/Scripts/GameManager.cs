@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
             gameManagerInstance = this;
         else
             Destroy(gameObject);
+
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Start is called before the first frame update
@@ -76,11 +78,6 @@ public class GameManager : MonoBehaviour
                 InventoryCanvas.enabled = true;
                 enablePlayerMovement = false;
             }
-
-            //foreach (Item i in player.GetComponent<Inventory>().ListItems())
-            //{
-            //    Debug.Log("Player Item: " + i.ToString());
-            //}
         }
     }
 
@@ -166,16 +163,25 @@ public class GameManager : MonoBehaviour
                 enableInteraction = false;
                 buttonCoolDown = 5;
                 break;
-            case "stair":                
-                StartCoroutine(moveToScene(interactObject.sceneToLoad, interactObject.playerPositionOnLoad));                
-                break;
+            //case "stair":                
+            //    
+            //    break;
             default:
                 break;
         }
     }
 
-    public IEnumerator moveToScene(string sceneName, Vector3 newPlayerPosition)
+    public void HandleTransitionObject(string objectName)
     {
+        StartCoroutine(MoveToAssociatedScene(objectName));
+    }
+
+    private IEnumerator MoveToAssociatedScene(string objectName)
+    {
+        string sceneName = GameObject.Find(objectName).GetComponent<TransitionObject>().sceneToLoad;
+        Vector3 playerPosition = GameObject.Find(objectName).GetComponent<TransitionObject>().playerPositionOnLoad;
+
+
         Scene currentScene = SceneManager.GetActiveScene();
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
@@ -185,7 +191,8 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        player.transform.position = newPlayerPosition;
+        GameObject.Find("Player").transform.position = playerPosition;
+        GameObject.Find("Player").GetComponent<PlayerController>().ResetMoveTarget();
 
         GameStateVariables.LoadSceneVariables(sceneName);
     }

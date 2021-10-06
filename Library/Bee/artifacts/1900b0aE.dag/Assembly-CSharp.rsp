@@ -348,6 +348,7 @@
 "Assets/Scripts/Item.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/SceneVariables.cs"
+"Assets/Scripts/TransitionObject.cs"
 -langversion:8.0
 
 /deterministic

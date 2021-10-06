@@ -59,7 +59,6 @@ public class SceneVariables
 
     public void UpdateDoorState(DoorState inDoorState)
     {
-        Debug.Log("isOpen?: " + inDoorState.isOpen + " :isLocked?: " + inDoorState.isLocked);
         DoorState currentState = GetDoorStateByName(inDoorState.name);
         if(currentState == null)
         {
@@ -82,13 +81,10 @@ public class SceneVariables
                 Interactable currObject = GameObject.Find(i.name).GetComponent<Interactable>();
                 if(currObject != null)
                 {
-                    Debug.Log("Found an object by the name " + i.name + ". Setting open & locked flags");
                     if (i.isLocked == false && currObject.locked == true)
                         currObject.Unlock(false);
                     if (i.isOpen == true && currObject.open == false)
                         currObject.OpenDoor(false);
-
-                    Debug.Log("open?: " + currObject.open + " :locked?: " + currObject.locked);
                 }
             }
         }

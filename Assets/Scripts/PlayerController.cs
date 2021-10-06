@@ -1,22 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-
-    private int speed = 12;
+    private static PlayerController playerInstance;
+    private int speed = 8;
     private Vector3 targetPosition;
-    private ContactFilter2D layerFilter;
+    private bool movedSinceLastTrigger = true;
+    public LayerMask stopMovementLayer;
     public int lastDirection;
+
+    void Awake()
+    {
+        DontDestroyOnLoad(this);
+
+        if (playerInstance == null)
+            playerInstance = this;
+        else
+            Destroy(gameObject);
+    }
 
     void Start()
     {
         targetPosition = transform.position;
-        layerFilter.SetLayerMask(1 << 10);
-        layerFilter.SetLayerMask(1 << 9);
-        lastDirection = 4;
     }
 
     // Update is called once per frame
@@ -27,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //MovePlayer();
+
     }
 
     public GameObject GetObjectInFront()
@@ -40,22 +48,22 @@ public class PlayerController : MonoBehaviour
             switch (lastDirection)
             {
                 case 1:
-                    hitObject = Physics2D.Raycast(transform.position, Vector2.left, 1);
+                    hitObject = Physics2D.Raycast(transform.position + new Vector3(.2f, .2f, .2f), Vector2.left, .8f);
                     if (hitObject.transform.gameObject != null)
                         objectInFront = hitObject.transform.gameObject;
                     break;
                 case 2:
-                    hitObject = Physics2D.Raycast(transform.position, Vector2.right, 1);
+                    hitObject = Physics2D.Raycast(transform.position + new Vector3(.2f, .2f, .2f), Vector2.right, .8f);
                     if (hitObject.transform.gameObject != null)
                         objectInFront = hitObject.transform.gameObject;
                     break;
                 case 3:
-                    hitObject = Physics2D.Raycast(transform.position, Vector2.up, 1);
+                    hitObject = Physics2D.Raycast(transform.position + new Vector3(.2f, .2f, .2f), Vector2.up, .8f);
                     if (hitObject.transform.gameObject != null)
                         objectInFront = hitObject.transform.gameObject;
                     break;
                 case 4:
-                    hitObject = Physics2D.Raycast(transform.position, Vector2.down, 1);
+                    hitObject = Physics2D.Raycast(transform.position + new Vector3(.2f, .2f, .2f), Vector2.down, .8f);
                     if (hitObject.transform.gameObject != null)
                         objectInFront = hitObject.transform.gameObject;
                     break;
@@ -63,14 +71,13 @@ public class PlayerController : MonoBehaviour
                     objectInFront = null;
                     break;
             }
+
+            Debug.Log(objectInFront.name);
         }
         catch (System.NullReferenceException e)
         {
             objectInFront = null;
         }
-
-        //if (objectInFront != null)
-        //    Debug.Log(objectInFront.name);
 
         return objectInFront;
     }
@@ -119,51 +126,60 @@ public class PlayerController : MonoBehaviour
     {
         int dir = 0;
 
-        if (Input.GetKey(KeyCode.A))
-        {
+        if (Input.GetAxisRaw("Horizontal") == -1)
             dir = 1;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
+        else if (Input.GetAxisRaw("Horizontal") == 1)
             dir = 2;
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
+        else if (Input.GetAxisRaw("Vertical") == 1)
             dir = 3;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            dir = 4;
-        }
+        else if (Input.GetAxisRaw("Vertical") == -1)
+            dir = 4;        
 
         return dir;
     }
 
+    public void ResetMoveTarget()
+    {
+        targetPosition = this.transform.position;
+    }
+
     public void MovePlayer()
     {
-        int direction = GetKeyDirection();
-        if (direction != 0)
-            lastDirection = direction;
-        bool canMove = CanMove(direction);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
-        if (direction == 1 && transform.position == targetPosition && canMove)
+        if (Vector3.Distance(transform.position, targetPosition) == 0f)
         {
-            targetPosition += Vector3.left;
+            if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
+            {
+                if (!Physics2D.OverlapCircle(targetPosition + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, stopMovementLayer))
+                {
+                    targetPosition += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
+                }
+                lastDirection = GetKeyDirection();
+            }
+            else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
+            {
+                if (!Physics2D.OverlapCircle(targetPosition + new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f), .2f, stopMovementLayer))
+                {
+                    targetPosition += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
+                }
+                lastDirection = GetKeyDirection();
+            }
         }
-        if (direction == 2 && transform.position == targetPosition && canMove)
-        {
-            targetPosition += Vector3.right;
-        }
-        if (direction == 3 && transform.position == targetPosition && canMove)
-        {
-            targetPosition += Vector3.up;
-        }
-        if (direction == 4 && transform.position == targetPosition && canMove)
-        {
-            targetPosition += Vector3.down;
-        }
-
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * speed);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        switch (collision.tag)
+        {
+            case "TransitionObject":
+                GameObject.Find("GameManager").GetComponent<GameManager>().HandleTransitionObject(collision.name);
+                break;
+            default:
+                Debug.Log("OnTriggerEnter2D with object with no tag. Mistake?");
+                break;
+        }
+    }    
 
 }
