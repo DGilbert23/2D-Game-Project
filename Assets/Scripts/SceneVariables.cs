@@ -5,21 +5,21 @@ using UnityEngine;
 
 public class SceneVariables
 {
-    private string _sceneName;
-    public string sceneName
+    private string _name;
+    public string name
     {
-        get => _sceneName;
+        get => _name;
     }
     private List<DoorState> doorStates = new List<DoorState>();
 
     public SceneVariables(string inName)
     {
-        _sceneName = inName;
+        _name = inName;
     }
 
     public override string ToString()
     {
-        return sceneName;
+        return name;
     }
 
     public DoorState GetDoorStateByName(string doorName)
@@ -59,34 +59,36 @@ public class SceneVariables
 
     public void UpdateDoorState(DoorState inDoorState)
     {
+        Debug.Log("isOpen?: " + inDoorState.isOpen + " :isLocked?: " + inDoorState.isLocked);
         DoorState currentState = GetDoorStateByName(inDoorState.name);
         if(currentState == null)
         {
             doorStates.Add(inDoorState);
-            Debug.Log("Added DoorState with name" + inDoorState.name);
         }
         else
         {
             currentState.isLocked = inDoorState.isLocked;
             currentState.isOpen = inDoorState.isOpen;
-            Debug.Log("Updated DoorState with name" + inDoorState.name);
         }
 
     }
 
     public void VerifyDoorStates()
     {
-        Debug.Log(this.sceneName);
-        Debug.Log(GameStateVariables.GetCurrentSceneName());
-        if(GameStateVariables.GetCurrentSceneName() == this.sceneName)
+        if(GameStateVariables.GetCurrentSceneName() == this.name)
         {
             foreach (DoorState i in doorStates)
             {
                 Interactable currObject = GameObject.Find(i.name).GetComponent<Interactable>();
                 if(currObject != null)
                 {
-                    currObject.open = i.isOpen;
-                    currObject.locked = i.isLocked;
+                    Debug.Log("Found an object by the name " + i.name + ". Setting open & locked flags");
+                    if (i.isLocked == false && currObject.locked == true)
+                        currObject.Unlock(false);
+                    if (i.isOpen == true && currObject.open == false)
+                        currObject.OpenDoor(false);
+
+                    Debug.Log("open?: " + currObject.open + " :locked?: " + currObject.locked);
                 }
             }
         }

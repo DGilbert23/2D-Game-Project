@@ -5,14 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager gameManagerInstance;
     public PlayerController player;
     private GameObject objInFront = null;
     private Interactable interactObject;
     //public DialogueManager dialogueMananger;
     private bool enablePlayerMovement = true;
     private bool enableInteraction = true;
+    
 
     private int buttonCoolDown = 8;
+
+    void Awake()
+    {
+        DontDestroyOnLoad(this);
+
+        if (gameManagerInstance == null)
+            gameManagerInstance = this;
+        else
+            Destroy(gameObject);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {        
         if (enableInteraction)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -116,7 +128,7 @@ public class GameManager : MonoBehaviour
                 if (!interactObject.open)
                     if (!interactObject.locked)
                     {
-                        interactObject.OpenDoor();
+                        interactObject.OpenDoor(true);
                     }
                     else
                     {
@@ -125,8 +137,8 @@ public class GameManager : MonoBehaviour
                         Debug.Log(hasKey);
                         if (hasKey)
                         {
-                            interactObject.Unlock();
-                            interactObject.OpenDoor();
+                            interactObject.Unlock(true);
+                            interactObject.OpenDoor(true);
                         }
                     }
                 break;
@@ -154,8 +166,8 @@ public class GameManager : MonoBehaviour
                 enableInteraction = false;
                 buttonCoolDown = 5;
                 break;
-            case "stair":
-                StartCoroutine(moveToScene(interactObject.sceneToLoad, interactObject.playerPositionOnLoad));
+            case "stair":                
+                StartCoroutine(moveToScene(interactObject.sceneToLoad, interactObject.playerPositionOnLoad));                
                 break;
             default:
                 break;
@@ -173,14 +185,9 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(sceneName));
         player.transform.position = newPlayerPosition;
-        SceneManager.MoveGameObjectToScene(GetComponent<Canvas>().gameObject, SceneManager.GetSceneByName(sceneName));
-        SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetSceneByName(sceneName));
 
         GameStateVariables.LoadSceneVariables(sceneName);
-
-        SceneManager.UnloadSceneAsync(currentScene);
     }
 
     //public void ContinueDialogue()

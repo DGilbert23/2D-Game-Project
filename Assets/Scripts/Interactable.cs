@@ -13,6 +13,7 @@ public class Interactable : MonoBehaviour
     public string sceneToLoad;
     public Vector3 playerPositionOnLoad;
     public Sprite openSprite;
+    public Sprite closedSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +32,7 @@ public class Interactable : MonoBehaviour
         return type;
     }
 
-    public void OpenDoor()
+    public void OpenDoor(bool save)
     {
         if (type == "door")
         {
@@ -42,16 +43,24 @@ public class Interactable : MonoBehaviour
                     BoxCollider2D collider = GetComponent<BoxCollider2D>();
                     collider.enabled = false;
                     open = true;
+                    this.GetComponent<SpriteRenderer>().sprite = openSprite;
+                    if (save)
+                    UpdateStateVariables();                    
                 }
             }
-            else
-            {
-                BoxCollider2D collider = GetComponent<BoxCollider2D>();
-                collider.enabled = true;
-            }
+        }
+    }
 
-            GameStateVariables.UpdateVariableStateInCurrentScene(this.type, new DoorState(this.gameObject.name, this.open, this.locked));
-            this.GetComponent<SpriteRenderer>().sprite = openSprite;
+    public void CloseDoor(bool save)
+    {
+        if (type == "door")
+        {
+            if (open)
+            {
+                GetComponent<BoxCollider2D>().enabled = true;
+                open = false;
+                this.GetComponent<SpriteRenderer>().sprite = closedSprite;
+            }
         }
     }
 
@@ -79,10 +88,23 @@ public class Interactable : MonoBehaviour
         //FindObjectOfType<DialogueTrigger>().TriggerDialogue();
     }
 
-    public void Unlock()
+    public void Unlock(bool save)
     {
         locked = false;
+        if(save)
+        UpdateStateVariables();
+    }
 
+    public void Lock(bool save)
+    {
+        locked = true;
+        if(save)
+        UpdateStateVariables();
+    }
+
+    private void UpdateStateVariables()
+    {
         GameStateVariables.UpdateVariableStateInCurrentScene(this.type, new DoorState(this.gameObject.name, this.open, this.locked));
+        Debug.Log("open?: " + open + " :locked?: " + locked);
     }
 }

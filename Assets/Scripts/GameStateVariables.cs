@@ -53,8 +53,10 @@ public static class GameStateVariables
     public static void LoadSceneVariables(string inSceneName)
     {
         SceneVariables savedVariables = GetSceneVariablesByName(inSceneName);
-        Debug.Log(savedVariables.ToString());
-        savedVariables.VerifyDoorStates();
+        if (savedVariables != null)
+        {
+            savedVariables.VerifyDoorStates();
+        }
     }
 
     public static void UpdateVariableStateInCurrentScene(string type, object inObjectState)
