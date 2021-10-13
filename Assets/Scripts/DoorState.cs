@@ -5,7 +5,7 @@ using UnityEngine;
 public class DoorState 
 {
     private string _name;
-    public string name
+    public string Name
     {
         get => _name;
     }
@@ -21,7 +21,7 @@ public class DoorState
 
     public override string ToString()
     {
-        return name;
+        return Name;
     }
 
 }

@@ -1501,14 +1501,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3808677418816130752, guid: 11cfe44ca34ebed4f8a03dfa1cb0eefd, type: 3}
-      propertyPath: open
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3808677418816130752, guid: 11cfe44ca34ebed4f8a03dfa1cb0eefd, type: 3}
-      propertyPath: locked
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3808677418816130752, guid: 11cfe44ca34ebed4f8a03dfa1cb0eefd, type: 3}
       propertyPath: keyName
       value: Door Key
       objectReference: {fileID: 0}
@@ -1647,9 +1639,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1006559017}
-  - component: {fileID: 1006559016}
   - component: {fileID: 1006559018}
+  - component: {fileID: 1006559016}
   - component: {fileID: 1006559019}
+  - component: {fileID: 1006559022}
+  - component: {fileID: 1006559023}
   - component: {fileID: 1006559021}
   - component: {fileID: 1006559020}
   m_Layer: 8
@@ -1754,6 +1748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc51c512fc9e76488aae2637c4059b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  items: []
 --- !u!50 &1006559020
 Rigidbody2D:
   serializedVersion: 4
@@ -1801,6 +1796,51 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
+--- !u!114 &1006559022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006559015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b1bc8f617795324196771b1087ecda0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headSlot: {fileID: 0}
+  bodySlot: {fileID: 0}
+  handSlot: {fileID: 0}
+  footSlot: {fileID: 0}
+  mainHand: {fileID: 0}
+  offHand: {fileID: 0}
+--- !u!114 &1006559023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006559015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc74efc727e59a24ba391ecce78b4926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseMaxHealth: 5
+  baseStrength: 5
+  baseIntelligence: 5
+  baseDexterity: 5
+  baseArmour: 0
+  baseWeaponStrength: 1
+  baseAccuracy: 1
+  currentMaxHealth: 0
+  currentHealth: 0
+  currentStrength: 0
+  currentIntelligence: 0
+  currentDexterity: 0
+  currentArmour: 0
+  currentWeaponStrength: 0
+  currentAccuracy: 0
 --- !u!1 &1099962802
 GameObject:
   m_ObjectHideFlags: 0
@@ -4397,7 +4437,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3808677418816130752, guid: 11cfe44ca34ebed4f8a03dfa1cb0eefd, type: 3}
       propertyPath: keyName
-      value: Door Key
+      value: doorKey
+      objectReference: {fileID: 0}
+    - target: {fileID: 3808677418816130752, guid: 11cfe44ca34ebed4f8a03dfa1cb0eefd, type: 3}
+      propertyPath: _keyName
+      value: doorKey
       objectReference: {fileID: 0}
     - target: {fileID: 3808677418816130754, guid: 11cfe44ca34ebed4f8a03dfa1cb0eefd, type: 3}
       propertyPath: m_RootOrder
@@ -4545,6 +4589,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chest-1
       objectReference: {fileID: 0}
+    - target: {fileID: 7368301792697991254, guid: 0fa1c9e6965e64049b817e2d8c2f1777, type: 3}
+      propertyPath: items.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368301792697991254, guid: 0fa1c9e6965e64049b817e2d8c2f1777, type: 3}
+      propertyPath: items.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 31f091308a5ea364fa2eee4a1671c626, type: 2}
+    - target: {fileID: 7368301792697991254, guid: 0fa1c9e6965e64049b817e2d8c2f1777, type: 3}
+      propertyPath: items.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 430972317d227364dae7367aa9249181, type: 2}
     - target: {fileID: 7368301792697991256, guid: 0fa1c9e6965e64049b817e2d8c2f1777, type: 3}
       propertyPath: m_RootOrder
       value: 7

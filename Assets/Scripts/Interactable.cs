@@ -8,8 +8,18 @@ public class Interactable : MonoBehaviour
     //public bool chest;
     public bool open;
     public bool locked;
-    public string keyName;
-    public string type;    
+    [SerializeField]
+    private string _keyName;
+    public string KeyName
+    {
+        get => _keyName; 
+    }
+    [SerializeField]
+    private string _type;
+    public string Type
+    {
+        get => _type;
+    }
     public Sprite openSprite;
     public Sprite closedSprite;
 
@@ -27,12 +37,12 @@ public class Interactable : MonoBehaviour
 
     public string GetInteractableType()
     {
-        return type;
+        return Type;
     }
 
     public void OpenDoor(bool save)
     {
-        if (type == "door")
+        if (Type == "DOOR")
         {
             if (!open)
             {
@@ -51,7 +61,7 @@ public class Interactable : MonoBehaviour
 
     public void CloseDoor(bool save)
     {
-        if (type == "door")
+        if (Type == "door")
         {
             if (open)
             {
@@ -66,7 +76,7 @@ public class Interactable : MonoBehaviour
     {
         Inventory chestContents = null;
 
-        if (type == "chest")
+        if (Type == "CHEST")
         {
             if (!open)
             {
@@ -102,6 +112,6 @@ public class Interactable : MonoBehaviour
 
     private void UpdateStateVariables()
     {
-        GameStateVariables.UpdateVariableStateInCurrentScene(this.type, new DoorState(this.gameObject.name, this.open, this.locked));
+        GameStateVariables.UpdateVariableStateInCurrentScene(this.Type, new DoorState(this.gameObject.name, this.open, this.locked));
     }
 }

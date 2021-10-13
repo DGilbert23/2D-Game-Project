@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     //public DialogueManager dialogueMananger;
     private bool enablePlayerMovement = true;
     private bool enableInteraction = true;
-    
+
 
     private int buttonCoolDown = 8;
 
@@ -79,6 +79,16 @@ public class GameManager : MonoBehaviour
                 enablePlayerMovement = false;
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            EquipableItem item = (EquipableItem)player.GetComponent<Inventory>().GetItemByName("steelHelmet");
+            player.GetComponent<EquipmentManager>().Equip(item.equipmentSlot, item);            
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            player.GetComponent<EquipmentManager>().UnEquip("HEAD");
+        }
     }
 
     private void FixedUpdate()
@@ -121,7 +131,7 @@ public class GameManager : MonoBehaviour
 
         switch (objectType)
         {
-            case "door":
+            case "DOOR":
                 if (!interactObject.open)
                     if (!interactObject.locked)
                     {
@@ -129,7 +139,7 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        string keyName = interactObject.keyName;
+                        string keyName = interactObject.KeyName;
                         bool hasKey = player.GetComponent<Inventory>().HasItem(keyName);
                         Debug.Log(hasKey);
                         if (hasKey)
@@ -139,10 +149,11 @@ public class GameManager : MonoBehaviour
                         }
                     }
                 break;
-            case "chest":
+            case "CHEST":
                 Inventory targetInventory;
                 if (!interactObject.open)
                 {
+                    Debug.Log("Begin chest opening");
                     targetInventory = interactObject.OpenChest();
                     List<Item> removeList = new List<Item>();
                     foreach (Item i in targetInventory.ListItems())

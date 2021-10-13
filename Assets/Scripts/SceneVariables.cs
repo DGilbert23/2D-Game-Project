@@ -6,7 +6,7 @@ using UnityEngine;
 public class SceneVariables
 {
     private string _name;
-    public string name
+    public string Name
     {
         get => _name;
     }
@@ -19,7 +19,7 @@ public class SceneVariables
 
     public override string ToString()
     {
-        return name;
+        return Name;
     }
 
     public DoorState GetDoorStateByName(string doorName)
@@ -59,7 +59,7 @@ public class SceneVariables
 
     public void UpdateDoorState(DoorState inDoorState)
     {
-        DoorState currentState = GetDoorStateByName(inDoorState.name);
+        DoorState currentState = GetDoorStateByName(inDoorState.Name);
         if(currentState == null)
         {
             doorStates.Add(inDoorState);
@@ -74,11 +74,11 @@ public class SceneVariables
 
     public void VerifyDoorStates()
     {
-        if(GameStateVariables.GetCurrentSceneName() == this.name)
+        if(GameStateVariables.GetCurrentSceneName() == this.Name)
         {
             foreach (DoorState i in doorStates)
             {
-                Interactable currObject = GameObject.Find(i.name).GetComponent<Interactable>();
+                Interactable currObject = GameObject.Find(i.Name).GetComponent<Interactable>();
                 if(currObject != null)
                 {
                     if (i.isLocked == false && currObject.locked == true)

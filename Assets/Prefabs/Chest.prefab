@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7368301792697991256}
   - component: {fileID: 7368301792697991255}
   - component: {fileID: 7368301792697991254}
-  - component: {fileID: 7368301792697991253}
   - component: {fileID: 7368301792697991252}
   - component: {fileID: 4469761132905549553}
   m_Layer: 16
@@ -49,11 +48,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   open: 0
   locked: 0
-  keyName: 
-  type: chest
-  sceneToLoad: 
-  playerPositionOnLoad: {x: 0, y: 0, z: 0}
+  _keyName: 
+  _type: CHEST
   openSprite: {fileID: 0}
+  closedSprite: {fileID: 0}
 --- !u!114 &7368301792697991254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,21 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc51c512fc9e76488aae2637c4059b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7368301792697991253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7368301792697991251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cad3ed934bf4bbd46800d3516714cc07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: Door Key
-  category: key
-  id: 0
+  items: []
 --- !u!61 &7368301792697991252
 BoxCollider2D:
   m_ObjectHideFlags: 0

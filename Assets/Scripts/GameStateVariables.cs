@@ -63,7 +63,7 @@ public static class GameStateVariables
     {
         switch(type)
         {
-            case "door":
+            case "DOOR":
                 GetCurrentSceneVariables().UpdateDoorState((DoorState)inObjectState);
                 break;
             default:

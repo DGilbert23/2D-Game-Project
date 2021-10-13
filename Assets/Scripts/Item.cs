@@ -1,33 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Item : MonoBehaviour
+[CreateAssetMenu(fileName = "New Consumable", menuName = "Item")]
+public class Item : ScriptableObject
 {
-    public string itemName;
-    public string category;
-    public int id;
-    // Start is called before the first frame update
-
-    public Item(string newName, string newCategory)
+    [SerializeField]
+    private string _itemName;
+    public string ItemName
     {
-        itemName = newName;
-        category = newCategory;
+        get => _itemName;
     }
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string displayName;
 
     override public string ToString()
     {
-        return itemName;
+        return ItemName;
     }
 }
