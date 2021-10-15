@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField]
     private List<Item> items = new List<Item>();
+    public delegate void OnItemChanged();
+    public OnItemChanged onItemChangedCallback;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,11 +23,17 @@ public class Inventory : MonoBehaviour
     public void AddItem(Item newItem)
     {
         items.Add(newItem);
+
+        if (onItemChangedCallback != null)
+            onItemChangedCallback.Invoke();
     }
 
     public void RemoveItem(Item removeItem)
     {
         items.Remove(removeItem);
+
+        if (onItemChangedCallback != null)
+            onItemChangedCallback.Invoke();
     }
 
     public Item GetItemByName(string searchItemName)
@@ -48,7 +55,7 @@ public class Inventory : MonoBehaviour
     {
         bool found = false;
         int i = 0;
-        while(i < items.Count && !found)
+        while (i < items.Count && !found)
         {
             if (items[i].ToString() == searchItem)
             {
@@ -62,5 +69,5 @@ public class Inventory : MonoBehaviour
 
         return found;
     }
-    
+
 }

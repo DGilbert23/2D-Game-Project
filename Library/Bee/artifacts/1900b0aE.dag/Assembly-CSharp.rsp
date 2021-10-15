@@ -349,6 +349,7 @@
 "Assets/Scripts/GameStateVariables.cs"
 "Assets/Scripts/Interactable.cs"
 "Assets/Scripts/Inventory.cs"
+"Assets/Scripts/InventoryUI.cs"
 "Assets/Scripts/Item.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/SceneVariables.cs"

@@ -25,7 +25,7 @@ public class EquipmentManager : MonoBehaviour
             return false;
         }
 
-        switch(slot.ToUpper())
+        switch (slot.ToUpper())
         {
             case "HEAD":
                 if (headSlot == null)
@@ -37,7 +37,7 @@ public class EquipmentManager : MonoBehaviour
                 else
                 {
                     UnEquip(slot);
-                    success = Equip(slot, item, recursionCount+1);
+                    success = Equip(slot, item, recursionCount + 1);
                 }
                 break;
             case "BODY":
@@ -110,7 +110,7 @@ public class EquipmentManager : MonoBehaviour
         }
 
         return success;
-    }    
+    }
 
     public bool UnEquip(string slot)
     {

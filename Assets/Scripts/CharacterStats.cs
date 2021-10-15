@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -20,7 +18,7 @@ public class CharacterStats : MonoBehaviour
     public int currentArmour = 0;
     public int currentWeaponStrength = 0;
     public int currentAccuracy = 0;
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +36,7 @@ public class CharacterStats : MonoBehaviour
     //statValue parameter will always be added to current value. If intending to remove a stat, pass a negative value.
     public void ModifyCurrentStat(string statType, int statValue)
     {
-        switch(statType.ToUpper())
+        switch (statType.ToUpper())
         {
             case "MAXHEALTH":
                 currentMaxHealth = currentMaxHealth + statValue;
@@ -66,7 +64,7 @@ public class CharacterStats : MonoBehaviour
                 break;
             default:
                 //make invalid item type error?
-                break;            
+                break;
         }
     }
 

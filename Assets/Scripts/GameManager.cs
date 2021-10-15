@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
         if (enableInteraction)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -80,10 +80,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             EquipableItem item = (EquipableItem)player.GetComponent<Inventory>().GetItemByName("steelHelmet");
-            player.GetComponent<EquipmentManager>().Equip(item.equipmentSlot, item);            
+            player.GetComponent<EquipmentManager>().Equip(item.equipmentSlot, item);
         }
         if (Input.GetKeyDown(KeyCode.U))
         {

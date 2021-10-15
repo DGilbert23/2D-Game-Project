@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
@@ -12,7 +10,7 @@ public class Interactable : MonoBehaviour
     private string _keyName;
     public string KeyName
     {
-        get => _keyName; 
+        get => _keyName;
     }
     [SerializeField]
     private string _type;
@@ -53,7 +51,7 @@ public class Interactable : MonoBehaviour
                     open = true;
                     this.GetComponent<SpriteRenderer>().sprite = openSprite;
                     if (save)
-                    UpdateStateVariables();                    
+                        UpdateStateVariables();
                 }
             }
         }
@@ -99,15 +97,15 @@ public class Interactable : MonoBehaviour
     public void Unlock(bool save)
     {
         locked = false;
-        if(save)
-        UpdateStateVariables();
+        if (save)
+            UpdateStateVariables();
     }
 
     public void Lock(bool save)
     {
         locked = true;
-        if(save)
-        UpdateStateVariables();
+        if (save)
+            UpdateStateVariables();
     }
 
     private void UpdateStateVariables()
