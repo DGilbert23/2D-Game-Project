@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\ConsumableItem.cs" />
     <Compile Include="Assets\Scripts\Interactable.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
+    <Compile Include="Assets\Scripts\InventoryLineItemController.cs" />
     <Compile Include="Assets\Scripts\EquipableItem.cs" />
     <Compile Include="Assets\Scripts\EquipmentManager.cs" />
     <Compile Include="Assets\Scripts\DoorState.cs" />
@@ -67,7 +68,7 @@
     <Compile Include="Assets\Scripts\InventoryUIController.cs" />
     <Compile Include="Assets\Scripts\GameStateVariables.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\InventoryLineItemController.cs" />
+    <Compile Include="Assets\Scripts\MenuController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

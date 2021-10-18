@@ -9,7 +9,18 @@ public class Item : ScriptableObject
     {
         get => _itemName;
     }
-    public string displayName;
+    [SerializeField]
+    protected string _displayName;
+    public string DisplayName
+    {
+        get => _displayName;
+    }
+    [SerializeField]
+    protected Sprite _inventoryIcon;
+    public Sprite InventoryIcon
+    {
+        get => _inventoryIcon;
+    }
 
     override public string ToString()
     {

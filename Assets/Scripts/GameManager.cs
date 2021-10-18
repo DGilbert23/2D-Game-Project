@@ -6,12 +6,17 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager gameManagerInstance;
-    public PlayerController player;
+    private PlayerController player;
     private GameObject objInFront = null;
     private Interactable interactObject;
     //public DialogueManager dialogueMananger;
     private bool enablePlayerMovement = true;
     private bool enableInteraction = true;
+
+    [SerializeField]
+    private GameObject inventoryCanvas;
+    [SerializeField]
+    private GameObject menuCanvas;
 
 
     private int buttonCoolDown = 8;
@@ -66,17 +71,34 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Canvas InventoryCanvas = FindObjectOfType<Canvas>();
-
-            if (InventoryCanvas.enabled)
+            if (!inventoryCanvas.activeInHierarchy)
             {
-                InventoryCanvas.enabled = false;
-                enablePlayerMovement = true;
+                inventoryCanvas.SetActive(true);
+                enablePlayerMovement = false;
+                if (!menuCanvas.activeInHierarchy)
+                    menuCanvas.SetActive(true);
             }
             else
             {
-                InventoryCanvas.enabled = true;
+                inventoryCanvas.SetActive(false);
+                enablePlayerMovement = true;
+                if (menuCanvas.activeInHierarchy)
+                    menuCanvas.SetActive(false);
+                
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (!menuCanvas.activeInHierarchy)
+            {
+                menuCanvas.SetActive(true);
                 enablePlayerMovement = false;
+            }
+            else
+            {
+                menuCanvas.SetActive(false);
+                enablePlayerMovement = true;
             }
         }
 
@@ -88,6 +110,8 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U))
         {
             player.GetComponent<EquipmentManager>().UnEquip("HEAD");
+            Inventory playerInventory = player.GetComponent<Inventory>();
+            playerInventory.RemoveItem(playerInventory.GetItemByName("steelHelmet"));
         }
     }
 
