@@ -352,6 +352,7 @@
 "Assets/Scripts/InventoryLineItemController.cs"
 "Assets/Scripts/InventoryUIController.cs"
 "Assets/Scripts/Item.cs"
+"Assets/Scripts/ItemDetailsController.cs"
 "Assets/Scripts/MenuController.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/SceneVariables.cs"

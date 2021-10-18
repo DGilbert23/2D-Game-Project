@@ -21,6 +21,12 @@ public class Item : ScriptableObject
     {
         get => _inventoryIcon;
     }
+    [SerializeField]
+    protected string _description;
+    public string Description
+    {
+        get => _description;
+    }
 
     override public string ToString()
     {

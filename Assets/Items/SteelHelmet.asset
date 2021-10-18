@@ -15,7 +15,9 @@ MonoBehaviour:
   _itemName: steelHelmet
   _displayName: Steel Helmet
   _inventoryIcon: {fileID: 21300000, guid: e81205a949911e541b882ee663f87b0c, type: 3}
+  _description: A simple steel helmet.
   equipmentSlot: HEAD
+  equipmentSlotDescription: Headgear
   intelligence: -1
   strength: 2
   dexteritiy: 0

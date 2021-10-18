@@ -15,4 +15,6 @@ MonoBehaviour:
   _itemName: doorKey
   _displayName: Door Key
   _inventoryIcon: {fileID: 21300000, guid: 0b8369ddc0bb6f840b6e505e1e0470bf, type: 3}
+  _description: A key that should open a door.
   consumableType: KEY
+  consumableTypeDescription: Key

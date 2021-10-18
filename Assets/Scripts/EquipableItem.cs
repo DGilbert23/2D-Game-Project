@@ -4,6 +4,7 @@ using UnityEngine;
 public class EquipableItem : Item
 {
     public string equipmentSlot;
+    public string equipmentSlotDescription;
     public int intelligence;
     public int strength;
     public int dexteritiy;

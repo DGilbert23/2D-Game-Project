@@ -6,6 +6,8 @@ public class InventoryUIController : MonoBehaviour
     private Inventory inventory;
     [SerializeField]
     private GameObject itemLineButtonTemplate;
+    [SerializeField]
+    private GameObject itemDetailsPanel;
     private List<GameObject> buttonList = new List<GameObject>();
 
     void Start()
@@ -13,30 +15,17 @@ public class InventoryUIController : MonoBehaviour
         inventory = GameObject.Find("Player").GetComponent<Inventory>();
         inventory.onItemChangedCallback += UpdateUI;
 
-        //foreach (Item i in inventory.ListItems())
-        //{
-        //    Debug.Log("Creating button for item with name: " + i.DisplayName);
-        //    GameObject button = Instantiate(itemLineButtonTemplate) as GameObject;
-
-        //    button.GetComponent<InventoryLineItemController>().SetText(i.DisplayName);
-        //    button.
-
-        //    button.transform.SetParent(itemLineButtonTemplate.transform.parent, false);
-        //    button.SetActive(true);
-        //    buttonList.Add(button);
-        //}
-
         RebuildInventoryList();
     }
 
-    public void ButtonClicked(string inString)
+    public void ExpandItemDetails(Item itemToDisplay)
     {
-        Debug.Log(inString);
+        itemDetailsPanel.GetComponent<ItemDetailsController>().SetItem(itemToDisplay);
+        itemDetailsPanel.SetActive(true);
     }
 
     public void UpdateUI()
     {
-        Debug.Log("Updating UI");
         RebuildInventoryList();
     }
     
@@ -54,8 +43,7 @@ public class InventoryUIController : MonoBehaviour
             Debug.Log("Creating button for item with name: " + i.DisplayName);
             GameObject button = Instantiate(itemLineButtonTemplate) as GameObject;
 
-            button.GetComponent<InventoryLineItemController>().SetText(i.DisplayName);
-            button.GetComponent<InventoryLineItemController>().SetIcon(i.InventoryIcon);
+            button.GetComponent<InventoryLineItemController>().CreateLineItem(i, this);
 
             button.transform.SetParent(itemLineButtonTemplate.transform.parent, false);
             button.SetActive(true);

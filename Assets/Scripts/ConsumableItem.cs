@@ -4,6 +4,7 @@ using UnityEngine;
 public class ConsumableItem : Item
 {
     public string consumableType;
+    public string consumableTypeDescription;
 
     public void UseItem()
     {
