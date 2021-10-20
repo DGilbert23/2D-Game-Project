@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\SceneVariables.cs" />
     <Compile Include="Assets\Scripts\ConsumableItem.cs" />
+    <Compile Include="Assets\Scripts\ItemDetailsController.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\Interactable.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
@@ -72,7 +73,6 @@
     <Compile Include="Assets\Scripts\InventoryUIController.cs" />
     <Compile Include="Assets\Scripts\GameStateVariables.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\ItemDetailsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

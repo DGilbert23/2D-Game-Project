@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ItemDetailsController : MonoBehaviour
 {
@@ -79,4 +80,19 @@ public class ItemDetailsController : MonoBehaviour
         }
     }
 
+    public void ToggleItemDetails(Item itemToDisplay)
+    {
+        if (this.gameObject.activeInHierarchy)
+        {
+            if (itemToDisplay == item)
+                this.gameObject.SetActive(false);
+            else
+                SetItem(itemToDisplay);
+        }
+        else
+        {
+            SetItem(itemToDisplay);
+            this.gameObject.SetActive(true);
+        }
+    }
 }

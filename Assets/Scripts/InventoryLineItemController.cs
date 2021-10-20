@@ -7,7 +7,7 @@ public class InventoryLineItemController : MonoBehaviour
     private Text itemDisplayName;
     [SerializeField]
     private Image itemIcon;
-    private InventoryUIController inventoryUIController;
+    private ItemDetailsController itemDetailsController;
     private Item item;
 
     private void SetText(string newText)
@@ -24,10 +24,10 @@ public class InventoryLineItemController : MonoBehaviour
             itemIcon.sprite = newSprite;
     }
 
-    public void CreateLineItem(Item newItem, InventoryUIController newUIController)
+    public void CreateLineItem(Item newItem, ItemDetailsController newDetailsController)
     {
         item = newItem;
-        inventoryUIController = newUIController;
+        itemDetailsController = newDetailsController;
 
         SetText(item.DisplayName);
         SetIcon(item.InventoryIcon);
@@ -35,6 +35,6 @@ public class InventoryLineItemController : MonoBehaviour
 
     public void OnClick()
     {
-        inventoryUIController.ExpandItemDetails(item);
+        itemDetailsController.ToggleItemDetails(item);
     }
 }

@@ -18,12 +18,6 @@ public class InventoryUIController : MonoBehaviour
         RebuildInventoryList();
     }
 
-    public void ExpandItemDetails(Item itemToDisplay)
-    {
-        itemDetailsPanel.GetComponent<ItemDetailsController>().SetItem(itemToDisplay);
-        itemDetailsPanel.SetActive(true);
-    }
-
     public void UpdateUI()
     {
         RebuildInventoryList();
@@ -43,7 +37,7 @@ public class InventoryUIController : MonoBehaviour
             Debug.Log("Creating button for item with name: " + i.DisplayName);
             GameObject button = Instantiate(itemLineButtonTemplate) as GameObject;
 
-            button.GetComponent<InventoryLineItemController>().CreateLineItem(i, this);
+            button.GetComponent<InventoryLineItemController>().CreateLineItem(i, itemDetailsPanel.GetComponent<ItemDetailsController>());
 
             button.transform.SetParent(itemLineButtonTemplate.transform.parent, false);
             button.SetActive(true);
