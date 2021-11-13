@@ -2,13 +2,21 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    public int baseMaxHealth = 5;
-    public int baseStrength = 5;
-    public int baseIntelligence = 5;
-    public int baseDexterity = 5;
-    public int baseArmour = 0;
-    public int baseWeaponStrength = 1;
-    public int baseAccuracy = 1;
+    [SerializeField]
+    private int _baseMaxHealth = 5;
+    public int BaseMaxHealth { get => _baseMaxHealth; }
+    [SerializeField]
+    private int baseStrength = 5;
+    [SerializeField]
+    private int baseIntelligence = 5;
+    [SerializeField]
+    private int baseDexterity = 5;
+    [SerializeField]
+    private int baseArmour = 0;
+    [SerializeField]
+    private int baseWeaponStrength = 1;
+    [SerializeField]
+    private int baseAccuracy = 1;
 
     public int currentMaxHealth = 0;
     public int currentHealth = 0;
@@ -23,8 +31,8 @@ public class CharacterStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentMaxHealth = baseMaxHealth;
-        currentHealth = baseMaxHealth;
+        currentMaxHealth = BaseMaxHealth;
+        currentHealth = BaseMaxHealth;
         currentStrength = baseStrength;
         currentIntelligence = baseIntelligence;
         currentDexterity = baseDexterity;
@@ -70,8 +78,8 @@ public class CharacterStats : MonoBehaviour
 
     public void ResetStats()
     {
-        currentMaxHealth = baseMaxHealth;
-        currentHealth = baseMaxHealth;
+        currentMaxHealth = BaseMaxHealth;
+        currentHealth = BaseMaxHealth;
         currentStrength = baseStrength;
         currentIntelligence = baseIntelligence;
         currentDexterity = baseDexterity;

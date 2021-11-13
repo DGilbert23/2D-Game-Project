@@ -8,16 +8,13 @@ public class Interactable : MonoBehaviour
     public bool locked;
     [SerializeField]
     private string _keyName;
-    public string KeyName
-    {
-        get => _keyName;
-    }
+    public string KeyName { get => _keyName; }
     [SerializeField]
     private string _type;
-    public string Type
-    {
-        get => _type;
-    }
+    public string Type { get => _type; }
+    [SerializeField]
+    private string _examineText;
+    public string ExamineText { get => _examineText; }
     public Sprite openSprite;
     public Sprite closedSprite;
 
@@ -82,6 +79,7 @@ public class Interactable : MonoBehaviour
                 {
                     chestContents = GetComponent<Inventory>();
                     open = true;
+                    this.gameObject.GetComponent<SpriteRenderer>().sprite = this.openSprite;
                 }
             }
         }

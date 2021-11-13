@@ -5,26 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    private static PlayerController playerInstance;
     private int speed = 8;
     private Vector3 targetPosition;
     private bool movedSinceLastTrigger = true;
     public LayerMask stopMovementLayer;
     public int lastDirection;
-
-    void Awake()
-    {
-        DontDestroyOnLoad(this);
-
-        if (playerInstance == null)
-            playerInstance = this;
-        else
-            Destroy(gameObject);
-    }
+    [SerializeField]
+    private GameObject inBuildingFog;
+    [SerializeField]
+    private GameObject outOfBuildingFog;
 
     void Start()
     {
         targetPosition = transform.position;
+        if(inBuildingFog == null)        
+            inBuildingFog = GameObject.Find("InBuildingFog");        
+        if (outOfBuildingFog == null)
+            outOfBuildingFog = GameObject.Find("OutOfBuildingFog");
+        
     }
 
     // Update is called once per frame
@@ -176,6 +174,19 @@ public class PlayerController : MonoBehaviour
             case "TransitionObject":
                 GameObject.Find("GameManager").GetComponent<GameManager>().HandleTransitionObject(collision.name);
                 break;
+            case "FogTransition":
+                if(inBuildingFog.activeInHierarchy)
+                {
+                    inBuildingFog.SetActive(false);
+                    outOfBuildingFog.SetActive(true);
+                }
+                else
+                {
+                    inBuildingFog.SetActive(true);
+                    outOfBuildingFog.SetActive(false);
+                }
+                break;
+
             default:
                 Debug.Log("OnTriggerEnter2D with object with no tag. Mistake?");
                 break;

@@ -75,6 +75,7 @@ MonoBehaviour:
   locked: 0
   _keyName: 
   _type: DOOR
+  _examineText: 
   openSprite: {fileID: 21300000, guid: 3ea2ead64d7bcf340981ab3a9d9d1ed6, type: 3}
   closedSprite: {fileID: 21300000, guid: 4253e0f59a19d0543b37bc5a95b4b96a, type: 3}
 --- !u!212 &5623709078513963576

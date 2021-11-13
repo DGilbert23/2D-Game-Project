@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager gameManagerInstance;
+    private Party party;
     private PlayerController player;
     private GameObject objInFront = null;
     private Interactable interactObject;
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         player = GameObject.Find("Player").GetComponent<PlayerController>();
+        party = GameObject.Find("Party").GetComponent<Party>();
     }
 
     // Start is called before the first frame update
@@ -98,6 +100,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 menuCanvas.SetActive(false);
+                inventoryCanvas.SetActive(false);
                 enablePlayerMovement = true;
             }
         }
@@ -198,10 +201,8 @@ public class GameManager : MonoBehaviour
                 enableInteraction = false;
                 buttonCoolDown = 5;
                 break;
-            //case "stair":                
-            //    
-            //    break;
             default:
+                Debug.Log(interactObject.ExamineText);
                 break;
         }
     }
