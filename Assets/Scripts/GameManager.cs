@@ -10,17 +10,21 @@ public class GameManager : MonoBehaviour
     private PlayerController player;
     private GameObject objInFront = null;
     private Interactable interactObject;
-    //public DialogueManager dialogueMananger;
     private bool enablePlayerMovement = true;
     private bool enableInteraction = true;
+    private bool enableMenuControls = true;
+    private DialogueController currentDialogueController;
+    private bool inDialogue = false;
 
     [SerializeField]
     private GameObject inventoryCanvas;
     [SerializeField]
     private GameObject menuCanvas;
+    [SerializeField]
+    private GameObject dialogueCanvas;
 
 
-    private int buttonCoolDown = 8;
+    
 
     void Awake()
     {
@@ -55,21 +59,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        //else
-        //{
-        //    if (dialogueMananger.inDialogue)
-        //    {
-        //        if (buttonCoolDown > 0)
-        //        {
-        //            buttonCoolDown--;
-        //        }
-        //        else if (Input.GetKeyDown(KeyCode.E))
-        //        {
-        //            buttonCoolDown = 8;
-        //            ContinueDialogue();
-        //        }
-        //    }
-        //}
 
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -196,15 +185,32 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case "NPC":
-                interactObject.OpenDialogue();
-                enablePlayerMovement = false;
-                enableInteraction = false;
-                buttonCoolDown = 5;
+                if (!inDialogue)
+                {
+                    enablePlayerMovement = false;
+                    enableInteraction = false;
+                    enableMenuControls = false;
+
+                    currentDialogueController = objInFront.GetComponent<DialogueController>();
+                    dialogueCanvas.SetActive(true);
+                    inDialogue = true;
+                    currentDialogueController.BeginDialogue();
+                }
                 break;
             default:
                 Debug.Log(interactObject.ExamineText);
                 break;
         }
+    }
+
+    public void StopDialogue()
+    {
+        enablePlayerMovement = true;
+        enableInteraction = true;
+        enableMenuControls = true;
+        dialogueCanvas.SetActive(false);
+        inDialogue = false;
+        currentDialogueController = null;
     }
 
     public void HandleTransitionObject(string objectName)
@@ -233,17 +239,4 @@ public class GameManager : MonoBehaviour
         GameStateVariables.LoadSceneVariables(sceneName);
     }
 
-    //public void ContinueDialogue()
-    //{
-    //    if (dialogueMananger.inDialogue)
-    //    {
-    //        dialogueMananger.DisplayNextSentence();
-    //    }
-
-    //    if (!dialogueMananger.inDialogue)
-    //    {
-    //        enablePlayerMovement = true;
-    //        enableInteraction = true;
-    //    }
-    //}
 }

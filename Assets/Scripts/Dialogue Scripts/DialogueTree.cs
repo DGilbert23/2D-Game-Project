@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class DialogueTree
 {
-    public DialogueNode firstNode;
+    private DialogueNode firstNode;
+    private DialogueNode currentNode;
 
     public void AddNode(DialogueNode newNode)
     {
@@ -13,17 +14,17 @@ public class DialogueTree
         else
         {
             bool added = false;
-            DialogueNode currentNode = firstNode;
+            DialogueNode curr = firstNode;
             while (!added)
             {
-                if (currentNode.right == null)
+                if (curr.right == null)
                 {
-                    currentNode.right = newNode;
+                    curr.right = newNode;
                     added = true;
                 }
                 else
                 {
-                    currentNode = currentNode.right;
+                    curr = curr.right;
                 }
             }
         }
@@ -87,6 +88,20 @@ public class DialogueTree
                 }
             currentNode = currentNode.right;
         }
+    }
+
+    public DialogueNode NextNode()
+    {
+        //Logic to evaluate condition & determine which child to return.
+        //for now, just reading tree right.
+        if (currentNode == null)
+        {
+            currentNode = firstNode;
+        }
+        else
+            currentNode = currentNode.right;
+
+        return currentNode;
     }
 
 

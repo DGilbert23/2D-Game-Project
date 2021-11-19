@@ -87,11 +87,6 @@ public class Interactable : MonoBehaviour
         return chestContents;
     }
 
-    public void OpenDialogue()
-    {
-        //FindObjectOfType<DialogueTrigger>().TriggerDialogue();
-    }
-
     public void Unlock(bool save)
     {
         locked = false;
