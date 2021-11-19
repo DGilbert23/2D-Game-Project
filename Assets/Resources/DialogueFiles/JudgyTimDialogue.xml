@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<DialogueTree>
+	<DialogueNode>
+		<sentence>Do you see that old man over there?</sentence>
+    <conditions>
+      <condition>
+        <type>Choice</type>
+        <itemName></itemName>
+        <playerChoice>1</playerChoice>
+      </condition>
+    </conditions>
+		<leftChild>
+      <DialogueNode>
+        <sentence>Well, watch out for him. He's tougher than he looks.</sentence>
+        <conditions></conditions>
+        <leftChild></leftChild>
+        <rightChild></rightChild>
+      </DialogueNode>
+		</leftChild>
+		<rightChild>
+      <DialogueNode>
+        <sentence>Be careful. He'll try to bonk your head.</sentence>
+        <conditions></conditions>
+        <leftChild></leftChild>
+        <rightChild></rightChild>
+      </DialogueNode>
+		</rightChild>
+	</DialogueNode>
+</DialogueTree>

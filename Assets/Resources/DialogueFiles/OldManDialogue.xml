@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<DialogueTree>
+	<DialogueNode>
+		<sentence>Do you have the helmet?</sentence>
+    <conditions>
+			<condition>
+				<type>ItemCheck</type>
+				<itemName>steelHelmet</itemName>
+        <playerChoice></playerChoice>
+			</condition>
+      <condition>
+        <type>Choice</type>
+        <itemName></itemName>
+        <playerChoice>1</playerChoice>
+      </condition>
+    </conditions>
+		<leftChild>
+			<DialogueNode>
+				<sentence>Seems like you don't after all. Come back when you do.</sentence>
+        <conditions></conditions>
+				<leftChild></leftChild>
+				<rightChild></rightChild>
+			</DialogueNode>
+		</leftChild>
+		<rightChild>
+			<DialogueNode>
+				<sentence>So you do have it.  Good job.</sentence>
+        <conditions></conditions>
+				<leftChild></leftChild>        
+				<rightChild>
+          <DialogueNode>
+            <sentence>Now we can begin. *fancy fight music and mouth sounds*</sentence>
+            <conditions></conditions>
+            <leftChild></leftChild>
+            <rightChild>
+              <DialogueNode>
+                <sentence>*The old man bonks your head with his cane*</sentence>
+                <conditions></conditions>
+                <leftChild></leftChild>
+                <rightChild></rightChild>
+              </DialogueNode>
+            </rightChild>
+          </DialogueNode>
+        </rightChild>
+			</DialogueNode>
+		</rightChild>
+	</DialogueNode>
+</DialogueTree>

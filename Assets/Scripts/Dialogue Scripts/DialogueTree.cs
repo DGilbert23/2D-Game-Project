@@ -90,16 +90,17 @@ public class DialogueTree
         }
     }
 
-    public DialogueNode NextNode()
+    public DialogueNode NextNode(bool playerChoice = false)
     {
-        //Logic to evaluate condition & determine which child to return.
-        //for now, just reading tree right.
-        if (currentNode == null)
+        if (currentNode != null)
         {
-            currentNode = firstNode;
+            if (currentNode.EvaluateConditions(playerChoice))
+                currentNode = currentNode.right;
+            else
+                currentNode = currentNode.left;
         }
         else
-            currentNode = currentNode.right;
+            currentNode = firstNode;
 
         return currentNode;
     }

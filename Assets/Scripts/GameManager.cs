@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     private GameObject menuCanvas;
     [SerializeField]
     private GameObject dialogueCanvas;
+    [SerializeField]
+    private GameObject dialogueChoiceCanvas;
 
 
     
@@ -60,40 +62,50 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (enableMenuControls)
         {
-            if (!inventoryCanvas.activeInHierarchy)
+            if (Input.GetKeyDown(KeyCode.I))
             {
-                inventoryCanvas.SetActive(true);
-                enablePlayerMovement = false;
+                if (!inventoryCanvas.activeInHierarchy)
+                {
+                    inventoryCanvas.SetActive(true);
+                    enablePlayerMovement = false;
+                    if (!menuCanvas.activeInHierarchy)
+                        menuCanvas.SetActive(true);
+                }
+                else
+                {
+                    inventoryCanvas.SetActive(false);
+                    enablePlayerMovement = true;
+                    if (menuCanvas.activeInHierarchy)
+                        menuCanvas.SetActive(false);
+
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
                 if (!menuCanvas.activeInHierarchy)
+                {
                     menuCanvas.SetActive(true);
-            }
-            else
-            {
-                inventoryCanvas.SetActive(false);
-                enablePlayerMovement = true;
-                if (menuCanvas.activeInHierarchy)
+                    enablePlayerMovement = false;
+                }
+                else
+                {
                     menuCanvas.SetActive(false);
-                
+                    inventoryCanvas.SetActive(false);
+                    enablePlayerMovement = true;
+                }
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                CloseAllMenus();
+            }
+
         }
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            if (!menuCanvas.activeInHierarchy)
-            {
-                menuCanvas.SetActive(true);
-                enablePlayerMovement = false;
-            }
-            else
-            {
-                menuCanvas.SetActive(false);
-                inventoryCanvas.SetActive(false);
-                enablePlayerMovement = true;
-            }
-        }
-
+        //REMOVE LATER - Temp controls
         if (Input.GetKeyDown(KeyCode.Z))
         {
             EquipableItem item = (EquipableItem)player.GetComponent<Inventory>().GetItemByName("steelHelmet");
@@ -194,7 +206,7 @@ public class GameManager : MonoBehaviour
                     currentDialogueController = objInFront.GetComponent<DialogueController>();
                     dialogueCanvas.SetActive(true);
                     inDialogue = true;
-                    currentDialogueController.BeginDialogue();
+                    currentDialogueController.BeginDialogue(dialogueChoiceCanvas);
                 }
                 break;
             default:
@@ -237,6 +249,13 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Player").GetComponent<PlayerController>().ResetMoveTarget();
 
         GameStateVariables.LoadSceneVariables(sceneName);
+    }
+
+    private void CloseAllMenus()
+    {
+        //TODO - expand on this. Sub-panes of inventory should be made inactive as well so they don't display upon reopen.
+        inventoryCanvas.SetActive(false);
+        menuCanvas.SetActive(false);
     }
 
 }

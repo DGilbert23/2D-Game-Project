@@ -11,13 +11,15 @@ public class DialogueController : MonoBehaviour
     private Text textBox;
     private Text personName;
     private Image personImage;
+    private GameObject choiceCanvas;
+    public bool playerChoice = false;
     private int buttonCoolDown = 8;
 
     private XmlDocument dialogueXml;
 
     void Awake()
     {
-        TextAsset xmlTextAsset = Resources.Load<TextAsset>("OldManDialogue");
+        TextAsset xmlTextAsset = Resources.Load<TextAsset>("DialogueFiles/"+ dialogueFileName);
         dialogueXml = new XmlDocument();
         dialogueXml.LoadXml(xmlTextAsset.text);
         GenerateDialogueTree();
@@ -35,16 +37,9 @@ public class DialogueController : MonoBehaviour
     {
         if (activeDialogue)
         {
-            if (Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.Space) && !choiceCanvas.activeInHierarchy)
             {
-                DialogueNode currNode = dialogueTree.NextNode();
-                if (currNode != null)
-                    textBox.text = currNode.text;
-                else
-                {
-                    activeDialogue = false;
-                    GameObject.Find("GameManager").GetComponent<GameManager>().StopDialogue();
-                }
+                ContinueDialogue();
             }
         }
     }
@@ -73,12 +68,51 @@ public class DialogueController : MonoBehaviour
         }
     }
 
-    public void BeginDialogue()
+    public void BeginDialogue(GameObject dialogueChoiceCanvas)
     {
         textBox = GameObject.Find("DialogueTextBox").GetComponent<Text>();
+        choiceCanvas = dialogueChoiceCanvas;
         //personName = GameObject.Find("DialogueNameTextBox").GetComponent<Text>();
 
-        textBox.text = dialogueTree.NextNode().text;
+        ContinueDialogue();
         activeDialogue = true;
+    }
+
+    public void ContinueDialogue()
+    {
+        DialogueNode currNode = dialogueTree.NextNode(playerChoice);
+        if (currNode != null)
+        {
+            textBox.text = currNode.text;
+            if (currNode.requiresUserChoice)
+            {
+                choiceCanvas.SetActive(true);
+                choiceCanvas.transform.Find("YesButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                choiceCanvas.transform.Find("YesButton").gameObject.GetComponent<Button>().onClick.AddListener(OnClickYes);
+                choiceCanvas.transform.Find("NoButton").gameObject.GetComponent<Button>().onClick.AddListener(OnClickNo);
+
+            }
+            else if (choiceCanvas.activeInHierarchy)
+            {
+                choiceCanvas.SetActive(false);
+            }
+        }
+        else
+        {
+            activeDialogue = false;
+            GameObject.Find("GameManager").GetComponent<GameManager>().StopDialogue();
+        }
+    }
+
+    public void OnClickYes()
+    {
+        playerChoice = true;
+        ContinueDialogue();
+    }
+
+    public void OnClickNo()
+    {
+        playerChoice = false;
+        ContinueDialogue();
     }
 }
