@@ -51,8 +51,6 @@ public class DialogueController : MonoBehaviour
 
     private void GenerateDialogueTree()
     {
-        Debug.Log("Generating Dialogue Tree");
-
         XmlNodeList dialogueNodes = dialogueXml.SelectNodes("DialogueTree/DialogueNode");
 
         int rootCount = 0;
@@ -89,6 +87,7 @@ public class DialogueController : MonoBehaviour
                 choiceCanvas.SetActive(true);
                 choiceCanvas.transform.Find("YesButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
                 choiceCanvas.transform.Find("YesButton").gameObject.GetComponent<Button>().onClick.AddListener(OnClickYes);
+                choiceCanvas.transform.Find("NoButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
                 choiceCanvas.transform.Find("NoButton").gameObject.GetComponent<Button>().onClick.AddListener(OnClickNo);
 
             }

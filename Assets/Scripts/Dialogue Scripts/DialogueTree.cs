@@ -92,12 +92,18 @@ public class DialogueTree
 
     public DialogueNode NextNode(bool playerChoice = false)
     {
+        Debug.Log(currentNode);
+
         if (currentNode != null)
         {
             if (currentNode.EvaluateConditions(playerChoice))
+            {
                 currentNode = currentNode.right;
+            }
             else
+            {
                 currentNode = currentNode.left;
+            }
         }
         else
             currentNode = firstNode;
