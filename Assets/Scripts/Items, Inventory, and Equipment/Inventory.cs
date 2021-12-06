@@ -30,7 +30,11 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(Item removeItem)
     {
-        items.Remove(removeItem);
+        if(!removeItem.IsImportant)
+            items.Remove(removeItem);
+        //else
+        //display some box indicating that the object is important and can't be dropped.
+            
 
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();

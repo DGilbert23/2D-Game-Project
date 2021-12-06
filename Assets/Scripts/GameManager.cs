@@ -101,22 +101,23 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 CloseAllMenus();
+                enablePlayerMovement = true;
             }
 
         }
 
         //REMOVE LATER - Temp controls
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            EquipableItem item = (EquipableItem)player.GetComponent<Inventory>().GetItemByName("steelHelmet");
-            player.GetComponent<EquipmentManager>().Equip(item.equipmentSlot, item);
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            player.GetComponent<EquipmentManager>().UnEquip("HEAD");
-            Inventory playerInventory = player.GetComponent<Inventory>();
-            playerInventory.RemoveItem(playerInventory.GetItemByName("steelHelmet"));
-        }
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    EquipableItem item = (EquipableItem)player.GetComponent<Inventory>().GetItemByName("steelHelmet");
+        //    player.GetComponent<EquipmentManager>().EquipItem(item);
+        //}
+        //if (Input.GetKeyDown(KeyCode.U))
+        //{
+        //    player.GetComponent<EquipmentManager>().UnEquipItem("HEAD");
+        //    Inventory playerInventory = player.GetComponent<Inventory>();
+        //    playerInventory.RemoveItem(playerInventory.GetItemByName("steelHelmet"));
+        //}
     }
 
     private void FixedUpdate()

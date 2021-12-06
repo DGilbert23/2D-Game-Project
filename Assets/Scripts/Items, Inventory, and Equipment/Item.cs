@@ -27,6 +27,9 @@ public class Item : ScriptableObject
     {
         get => _description;
     }
+    [SerializeField]
+    protected bool _isImportant;
+    public bool IsImportant { get => _isImportant; }
 
     override public string ToString()
     {

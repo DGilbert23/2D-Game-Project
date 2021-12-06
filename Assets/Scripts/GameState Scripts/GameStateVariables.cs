@@ -56,6 +56,9 @@ public static class GameStateVariables
         if (savedVariables != null)
         {
             savedVariables.VerifyDoorStates();
+            //verify chest states
+            //verify dogs
+
         }
     }
 
