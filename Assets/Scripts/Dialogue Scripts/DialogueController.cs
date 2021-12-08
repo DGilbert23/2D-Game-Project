@@ -13,7 +13,6 @@ public class DialogueController : MonoBehaviour
     private Image personImage;
     private GameObject choiceCanvas;
     public bool playerChoice = false;
-    private int buttonCoolDown = 8;
 
     private XmlDocument dialogueXml;
 

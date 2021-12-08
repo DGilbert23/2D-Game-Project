@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,9 +25,11 @@ public class GameManager : MonoBehaviour
     private GameObject dialogueCanvas;
     [SerializeField]
     private GameObject dialogueChoiceCanvas;
+    [SerializeField]
+    private GameObject inBuildingFog;
+    [SerializeField]
+    private GameObject outOfBuildingFog;
 
-
-    
 
     void Awake()
     {
@@ -105,23 +108,10 @@ public class GameManager : MonoBehaviour
             }
 
         }
-
-        //REMOVE LATER - Temp controls
-        //if (Input.GetKeyDown(KeyCode.Z))
-        //{
-        //    EquipableItem item = (EquipableItem)player.GetComponent<Inventory>().GetItemByName("steelHelmet");
-        //    player.GetComponent<EquipmentManager>().EquipItem(item);
-        //}
-        //if (Input.GetKeyDown(KeyCode.U))
-        //{
-        //    player.GetComponent<EquipmentManager>().UnEquipItem("HEAD");
-        //    Inventory playerInventory = player.GetComponent<Inventory>();
-        //    playerInventory.RemoveItem(playerInventory.GetItemByName("steelHelmet"));
-        //}
     }
 
     private void FixedUpdate()
-    {
+    {   
         if (enablePlayerMovement)
         {
             player.MovePlayer();
@@ -233,23 +223,46 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator MoveToAssociatedScene(string objectName)
     {
-        string sceneName = GameObject.Find(objectName).GetComponent<TransitionObject>().sceneToLoad;
+        TransitionObject objectTransitionFrom = GameObject.Find(objectName).GetComponent<TransitionObject>();
         Vector3 playerPosition = GameObject.Find(objectName).GetComponent<TransitionObject>().playerPositionOnLoad;
 
-
         Scene currentScene = SceneManager.GetActiveScene();
-
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(objectTransitionFrom.sceneToLoad);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
 
-        GameObject.Find("Player").transform.position = playerPosition;
-        GameObject.Find("Player").GetComponent<PlayerController>().ResetMoveTarget();
+        if(objectTransitionFrom.fogStateOnLoad.x == 1)
+        {
 
-        GameStateVariables.LoadSceneVariables(sceneName);
+        }
+
+        //Handle Player's position on transfer
+        player.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        switch (player.lastDirection)
+        {
+            case 1:
+                GameObject.Find("Player").transform.position = playerPosition + new Vector3(-1,0,0);
+                break;
+            case 2:
+                GameObject.Find("Player").transform.position = playerPosition + new Vector3(1, 0, 0);
+                break;
+            case 3:
+                GameObject.Find("Player").transform.position = playerPosition + new Vector3(0, 1, 0);
+                break;
+            case 4:
+                GameObject.Find("Player").transform.position = playerPosition + new Vector3(0, -1, 0);
+                break;
+            default:
+                break;
+        }
+        player.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        player.ResetMoveTarget();
+        UpdateFogGrids();
+        SetFogGridStartState(objectTransitionFrom.fogStateOnLoad);
+
+        GameStateVariables.LoadSceneVariables(objectTransitionFrom.sceneToLoad);
     }
 
     private void CloseAllMenus()
@@ -258,5 +271,43 @@ public class GameManager : MonoBehaviour
         inventoryCanvas.SetActive(false);
         menuCanvas.SetActive(false);
     }
+
+    private void UpdateFogGrids()
+    {
+        if (inBuildingFog == null)
+            inBuildingFog = GameObject.Find("InBuildingFog");
+        if (outOfBuildingFog == null)
+            outOfBuildingFog = GameObject.Find("OutOfBuildingFog");
+    }
+
+    private void SetFogGridStartState(Vector2 state)
+    {
+        if (state.x == 1)
+            inBuildingFog.GetComponent<TilemapRenderer>().enabled = true;
+        else if (state.x == 0)
+            inBuildingFog.GetComponent<TilemapRenderer>().enabled = false;
+
+        if (state.y == 1)
+            outOfBuildingFog.GetComponent<TilemapRenderer>().enabled = true;
+        else if (state.y == 0)
+            outOfBuildingFog.GetComponent<TilemapRenderer>().enabled = false;
+    }
+
+    public void AlternateFogGrids()
+    {
+        if (inBuildingFog.GetComponent<TilemapRenderer>().enabled)
+        {
+            inBuildingFog.GetComponent<TilemapRenderer>().enabled = false;
+            outOfBuildingFog.GetComponent<TilemapRenderer>().enabled = true;
+        }
+        else
+        {
+            inBuildingFog.GetComponent<TilemapRenderer>().enabled = true;
+            outOfBuildingFog.GetComponent<TilemapRenderer>().enabled = false;
+        }
+    }
+
+
+
 
 }

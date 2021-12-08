@@ -1,34 +1,34 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+
 
 public class PlayerController : MonoBehaviour
 {
     private int speed = 8;
+    [SerializeField]
     private Vector3 targetPosition;
-    private bool movedSinceLastTrigger = true;
     public LayerMask stopMovementLayer;
-    public int lastDirection;
-    [SerializeField]
-    private GameObject inBuildingFog;
-    [SerializeField]
-    private GameObject outOfBuildingFog;
+    public int lastDirection;    
+    private bool recentCollision = false;
+    private int updatesSinceCollision = 0;
 
     void Start()
     {
-        targetPosition = transform.position;
-        if(inBuildingFog == null)        
-            inBuildingFog = GameObject.Find("InBuildingFog");        
-        if (outOfBuildingFog == null)
-            outOfBuildingFog = GameObject.Find("OutOfBuildingFog");
-        
+        targetPosition = transform.position;              
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (recentCollision)
+        {
+            if (updatesSinceCollision >= 10)
+            {
+                recentCollision = false;
+                updatesSinceCollision = 0;
+            }
+            else
+                updatesSinceCollision++;
+        }
     }
 
     void FixedUpdate()
@@ -168,29 +168,25 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        switch (collision.tag)
+        if (!recentCollision)
         {
-            case "TransitionObject":
-                GameObject.Find("GameManager").GetComponent<GameManager>().HandleTransitionObject(collision.name);
-                break;
-            case "FogTransition":
-                if(inBuildingFog.activeInHierarchy)
-                {
-                    inBuildingFog.SetActive(false);
-                    outOfBuildingFog.SetActive(true);
-                }
-                else
-                {
-                    inBuildingFog.SetActive(true);
-                    outOfBuildingFog.SetActive(false);
-                }
-                break;
+            recentCollision = true;
+            switch (collision.tag)
+            {
+                case "TransitionObject":
+                    GameObject.Find("GameManager").GetComponent<GameManager>().HandleTransitionObject(collision.name);
+                    break;
+                case "FogTransition":
+                    GameObject.Find("GameManager").GetComponent<GameManager>().AlternateFogGrids();
+                    break;
 
-            default:
-                Debug.Log("OnTriggerEnter2D with object with no tag. Mistake?");
-                break;
+                default:
+                    Debug.Log("OnTriggerEnter2D with object with no tag. Mistake?");
+                    break;
+            }
         }
     }    
+
+    
 
 }
