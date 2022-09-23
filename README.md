@@ -3,7 +3,7 @@ This project was/is a simple sandbox area project for me to learn more about Uni
 
 As of the last edit on this README, I've implemented the following:
 
-Character movement & collision
-Inventory & Equipment management
-Basic NPC dialogue
-Object & variable state saving between scenes
+ - Character movement & collision 
+ - Inventory & Equipment management
+ - Basic NPC dialogue
+ - Object & variable state saving between scenes
